@@ -1,0 +1,29 @@
+html{
+    background-color: lightgrey;
+}
+table, th, td{
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+table{
+    width: 1000px;
+    table-layout: fixed;
+    /* align-content: center; */
+}
+th{
+    width: 50px;
+    height: 35px;
+}
+td{
+    height: 100px;
+    text-align: left;
+    vertical-align: top;
+    color: darkblue;    
+}
+/* Hover attribute found on https://www.w3schools.com/css/css_table.asp */
+tr:hover{
+    background-color: lightblue;
+}
+/* .date{
+    
+} */
