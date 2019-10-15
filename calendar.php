@@ -175,7 +175,6 @@
             let zeroDate = new Date(nowMonth.year, nowMonth.month+1, 0);
             let day = 1;
             for (j=1; j<=6; j++){
-                if(day <= Number(zeroDate.getDate())){
                     for (i=1; i<=7; i++){
                         if (day <= Number(zeroDate.getDate())){
                             if (j==1){
@@ -197,7 +196,6 @@
                             document.getElementById(`(${j},${i})`).firstChild.textContent = "";
                         }
                     }
-                }
             }
             date = first;
         }
@@ -212,7 +210,6 @@
             let zeroDate = new Date(nowMonth.year, nowMonth.month+1, 0);
             let day = 1;
             for (j=1; j<=6; j++){
-                if(day <= Number(zeroDate.getDate())){
                     for (i=1; i<=7; i++){
                         if (day <= Number(zeroDate.getDate())){
                             if (j==1){
@@ -234,7 +231,6 @@
                             document.getElementById(`(${j},${i})`).firstChild.textContent = "";
                         }
                     }
-                }
             }
             date = first;
         }
