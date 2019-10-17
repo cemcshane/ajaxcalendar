@@ -159,6 +159,7 @@
     <script>
     document.addEventListener("DOMContentLoaded", whatToDisplay, false);
     function whatToDisplay(){
+        // localStorage info found on https://www.w3schools.com/jsref/prop_win_localstorage.asp
         if (localStorage.getItem("loggedin")==null){
             localStorage.setItem("loggedin", 0);
         }
@@ -311,6 +312,9 @@
                 document.getElementById("yesuser").style.visibility = "visible";
                 localStorage.removeItem("loggedin");
                 localStorage.setItem("loggedin", 1);
+            }
+            else{
+                alert("Incorrect username or password.");
             }
         }
     </script>
