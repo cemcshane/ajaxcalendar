@@ -157,6 +157,23 @@
         ?>
     </table>
     <script>
+    document.addEventListener("DOMContentLoaded", whatToDisplay, false);
+    function whatToDisplay(){
+        if (localStorage.getItem("loggedin")==null){
+            localStorage.setItem("loggedin", 0);
+        }
+        let test = localStorage.getItem("loggedin");
+        if (test==1){
+            document.getElementById("nonuser").style.visibility = "hidden";
+            document.getElementById("yesuser").style.visibility = "visible";             
+        }
+        else{
+            document.getElementById("yesuser").style.visibility = "hidden";
+            document.getElementById("nonuser").style.visibility = "visible";
+        }
+    }
+    </script>
+    <script>
         let date = new Date();
         document.getElementById("month").textContent = nameMonth(date.getMonth());
         // getFullYear() function found on https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear
@@ -255,19 +272,20 @@
         }
         document.getElementById("prevpg").addEventListener("click", prevPage, false);
         document.getElementById("nextpg").addEventListener("click", nextPage, false);
-        document.getElementById("yesuser").style.visibility = "hidden";
-    </script>
-    <!-- <script>
-        
         document.getElementById("logout").addEventListener("click", logOut, false);
         function logOut(){
             fetch('unlog.php')
             .then(res => res.json())
-            .then(response => console.log('Success:', JSON.stringify(response))
+            .then(response => console.log('Success:', JSON.stringify(response)))
             .catch(error => console.error('Error:', error))
-            // document.getElementById("nonuser").style.visibliity = "visible";
+            localStorage.removeItem("loggedin");
+            localStorage.setItem("loggedin", 0);
+            whatToDisplay();
+
         }
-        document.getElementById("login_btn").addEventListener("click", loginChecker, false); // Bind the AJAX call to button click
+    </script>
+    <script>
+        document.getElementById("login_btn").addEventListener("click", loginChecker, false);
         function loginChecker(event) {
             const username = document.getElementById("username").value; // Get the username from the form
             const password = document.getElementById("password").value; // Get the password from the form
@@ -284,14 +302,17 @@
                 .then(response => {console.log('Success:', JSON.stringify(response)); loginDisplay(JSON.stringify(response))})
                 .catch(error => console.error('Error:',error))
         }
+
         function loginDisplay(resp){
             var jsonData = JSON.parse(resp);
             if (jsonData.success){
                 // .style.visibility found on https://www.w3schools.com/jsref/prop_style_visibility.asp
                 document.getElementById("nonuser").style.visibility = "hidden";
                 document.getElementById("yesuser").style.visibility = "visible";
+                localStorage.removeItem("loggedin");
+                localStorage.setItem("loggedin", 1);
             }
         }
-    </script> -->
+    </script>
 </body>
 </html>
