@@ -115,8 +115,27 @@
             return month[num];
         }
     </script>
-    <h1><div id="month"></div> <div id="year"></div></h1>
+    <h1><span id="month">Month</span> <span id="year">Year</span></h1>
+    <div id="yesuser">
+        <button id="logout">Log out</button>
+        <br>
+    </div>
+    <div id="nonuser">
+        <!-- Both forms below taken and modified from "Logging in a User" example on AJAX class wiki -->
+        <label id="reg">Create an account: <input type="text" id="createusername" placeholder="Username" /></label>
+        <input type="password" id="createpassword" placeholder="Password" />
+        <button id="signup_btn">Register</button>
+        <script type="text/javascript" src="registerajax.js"></script>
+        <br><br>
+        <label id="signin">Sign in: <input type="text" id="username" placeholder="Username" /></label>
+        <input type="password" id="password" placeholder="Password" />
+        <button id="login_btn">Log In</button>
+        <script type="text/javascript" src="loginajax.js"></script>
+        <br><br><br>
+    </div>
     <button id="prevpg">Previous Month</button><button id="nextpg">Next Month</button>
+    <br>
+    <br>
     <table>
         <tr>
             <th>Sunday</th>
@@ -236,6 +255,43 @@
         }
         document.getElementById("prevpg").addEventListener("click", prevPage, false);
         document.getElementById("nextpg").addEventListener("click", nextPage, false);
+        document.getElementById("yesuser").style.visibility = "hidden";
     </script>
+    <!-- <script>
+        
+        document.getElementById("logout").addEventListener("click", logOut, false);
+        function logOut(){
+            fetch('unlog.php')
+            .then(res => res.json())
+            .then(response => console.log('Success:', JSON.stringify(response))
+            .catch(error => console.error('Error:', error))
+            // document.getElementById("nonuser").style.visibliity = "visible";
+        }
+        document.getElementById("login_btn").addEventListener("click", loginChecker, false); // Bind the AJAX call to button click
+        function loginChecker(event) {
+            const username = document.getElementById("username").value; // Get the username from the form
+            const password = document.getElementById("password").value; // Get the password from the form
+
+            // Make a URL-encoded string for passing POST data:
+            const data = { 'username': username, 'password': password };
+
+            fetch("login_ajax.php", {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: { 'content-type': 'application/json' }
+                })
+                .then(res => res.json())
+                .then(response => {console.log('Success:', JSON.stringify(response)); loginDisplay(JSON.stringify(response))})
+                .catch(error => console.error('Error:',error))
+        }
+        function loginDisplay(resp){
+            var jsonData = JSON.parse(resp);
+            if (jsonData.success){
+                // .style.visibility found on https://www.w3schools.com/jsref/prop_style_visibility.asp
+                document.getElementById("nonuser").style.visibility = "hidden";
+                document.getElementById("yesuser").style.visibility = "visible";
+            }
+        }
+    </script> -->
 </body>
 </html>

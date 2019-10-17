@@ -24,6 +24,13 @@ td{
 tr:hover{
     background-color: lightblue;
 }
-/* .date{
-    
-} */
+td:hover{
+    background-color: lightseagreen;
+}
+#signin, #reg{
+    font-size: 20px;
+    font-weight: bold;
+}
+h1{
+    font-size: 40px;
+}
