@@ -160,10 +160,10 @@
     document.addEventListener("DOMContentLoaded", whatToDisplay, false);
     function whatToDisplay(){
         // localStorage info found on https://www.w3schools.com/jsref/prop_win_localstorage.asp
-        if (localStorage.getItem("loggedin")==null){
-            localStorage.setItem("loggedin", 0);
+        if (sessionStorage.getItem("loggedin")==null){
+            sessionStorage.setItem("loggedin", 0);
         }
-        let test = localStorage.getItem("loggedin");
+        let test = sessionStorage.getItem("loggedin");
         if (test==1){
             document.getElementById("nonuser").style.visibility = "hidden";
             document.getElementById("yesuser").style.visibility = "visible";             
@@ -279,8 +279,8 @@
             .then(res => res.json())
             .then(response => console.log('Success:', JSON.stringify(response)))
             .catch(error => console.error('Error:', error))
-            localStorage.removeItem("loggedin");
-            localStorage.setItem("loggedin", 0);
+            sessionStorage.removeItem("loggedin");
+            sessionStorage.setItem("loggedin", 0);
             whatToDisplay();
 
         }
@@ -309,8 +309,8 @@
                 // .style.visibility found on https://www.w3schools.com/jsref/prop_style_visibility.asp
                 document.getElementById("nonuser").style.visibility = "hidden";
                 document.getElementById("yesuser").style.visibility = "visible";
-                localStorage.removeItem("loggedin");
-                localStorage.setItem("loggedin", 1);
+                sessionStorage.removeItem("loggedin");
+                sessionStorage.setItem("loggedin", 1);
             }
         }
     </script>
