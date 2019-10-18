@@ -8,7 +8,6 @@ table, th, td{
 table{
     width: 1000px;
     table-layout: fixed;
-    /* align-content: center; */
 }
 th{
     width: 50px;

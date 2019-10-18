@@ -13,7 +13,7 @@ function registerAjax(event) {
             headers: { 'content-type': 'application/json' }
         })
         .then(response => response.json())
-        .then(data => console.log(data.success ? "You've been registered!" : `You were not registered ${data.message}`));
+        .then(data => {console.log(data.success ? "You've been registered!" : `You were not registered. ${data.message}`); alert(data.message)});
 }
 
 document.getElementById("signup_btn").addEventListener("click", registerAjax, false); // Bind the AJAX call to button click

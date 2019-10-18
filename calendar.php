@@ -293,7 +293,6 @@
 
             // Make a URL-encoded string for passing POST data:
             const data = { 'username': username, 'password': password };
-
             fetch("login_ajax.php", {
                     method: 'POST',
                     body: JSON.stringify(data),
@@ -312,9 +311,6 @@
                 document.getElementById("yesuser").style.visibility = "visible";
                 localStorage.removeItem("loggedin");
                 localStorage.setItem("loggedin", 1);
-            }
-            else{
-                alert("Incorrect username or password.");
             }
         }
     </script>

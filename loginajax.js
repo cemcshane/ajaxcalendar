@@ -13,6 +13,6 @@ function loginAjax(event) {
             headers: { 'content-type': 'application/json' }
         })
         .then(response => response.json())
-        .then(data => console.log(data.success ? "You've been logged in!" : `You were not logged in ${data.message}`));
+        .then(data => {console.log(data.success ? "You've been logged in!" : `You were not logged in. ${data.message}`); if(!data.success){alert(data.message)}});
 }
 document.getElementById("login_btn").addEventListener("click", loginAjax, false);
