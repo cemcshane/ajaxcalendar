@@ -117,8 +117,25 @@
     </script>
     <h1><span id="month">Month</span> <span id="year">Year</span></h1>
     <div id="yesuser">
-        <button id="logout">Log out</button>
-        <br>
+        <button id="logout">Log out</button><br><br>
+        <button id="showadd">Add an event</button> 
+        <button id="showedit">Edit an event</button> 
+        <button id="showdelete">Delete an event</button>
+        <div id="buttondisplay">
+             
+        </div>
+        <!-- date and input types found on https://www.w3schools.com/html/html_form_input_types.asp-->
+        <script>
+        document.getElementById("showadd").addEventListener("click", function(event){document.getElementById("buttondisplay").innerHTML = 
+        '<h3>Add an event:</h3><label>Event: <input type="text" id="eventcontent" placeholder="Title" /></label><br><br><label>Date: <input type="date" id="date"/></label><label>Time: <input type="time" id="time" /></label><br><br><button id="addevent">Add</button>';
+        },false);
+        document.getElementById("showdelete").addEventListener("click", function(event){document.getElementById("buttondisplay").innerHTML = 
+        '<h3>Delete an event:</h3><label>Event: <input type="text" id="eventcontent" placeholder="Title" /></label><br><br><label>Date: <input type="date" id="date"/></label><label>Time: <input type="time" id="time" /></label><br><br><button id="deleteevent">Delete</button>';
+        },false);
+        document.getElementById("showedit").addEventListener("click", function(event){document.getElementById("buttondisplay").innerHTML = 
+        '<h3>Edit an event:</h3><label><strong>Choose the event you would like to modify: </strong><input type="text" id="eventcontent" placeholder="Event Title" /></label><label>Date: <input type="date" id="date"/></label><label>Time: <input type="time" id="time" /></label><br><br><label><strong>Modified event input: </strong><input type="text" id="eventcontent" placeholder="Event Title" /></label><label>Date: <input type="date" id="date"/></label><label>Time: <input type="time" id="time" /></label></label><br><br><button id="editevent">Modify</button>';
+        },false);
+        </script> 
     </div>
     <div id="nonuser">
         <!-- Both forms below taken and modified from "Logging in a User" example on AJAX class wiki -->
@@ -159,7 +176,7 @@
     <script>
     document.addEventListener("DOMContentLoaded", whatToDisplay, false);
     function whatToDisplay(){
-        // localStorage info found on https://www.w3schools.com/jsref/prop_win_localstorage.asp
+        // sessionStorage info found on https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage
         if (sessionStorage.getItem("loggedin")==null){
             sessionStorage.setItem("loggedin", 0);
         }

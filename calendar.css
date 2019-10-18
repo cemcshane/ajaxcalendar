@@ -33,3 +33,9 @@ td:hover{
 h1{
     font-size: 40px;
 }
+#month, #day{
+    width: 40px;
+}
+#year{
+    width: 60px;
+}
