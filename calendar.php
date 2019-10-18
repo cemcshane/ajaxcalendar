@@ -126,6 +126,9 @@
         </div>
         <!-- date and input types found on https://www.w3schools.com/html/html_form_input_types.asp-->
         <script>
+        document.getElementById("logout").addEventListener("click", function(event){document.getElementById("buttondisplay").textContent = 
+        ' ';
+        },false);
         document.getElementById("showadd").addEventListener("click", function(event){document.getElementById("buttondisplay").innerHTML = 
         '<h3>Add an event:</h3><label>Event: <input type="text" id="eventcontent" placeholder="Title" /></label><br><br><label>Date: <input type="date" id="date"/></label><label>Time: <input type="time" id="time" /></label><br><br><button id="addevent">Add</button>';
         },false);
