@@ -52,7 +52,6 @@ if((preg_match('/\w+/', $password))&&(preg_match('/\w+/', $username))){
         session_start();
         $_SESSION['user_id'] = $user_id;
         $_SESSION['username'] = $username;
-        $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(32)); 
 
         echo json_encode(array(
             "success" => true,

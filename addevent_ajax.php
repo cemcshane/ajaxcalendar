@@ -34,7 +34,7 @@
     if(!preg_match('/^[1-9]+[0-9]*$/', $userid)){
         echo json_encode(array(
             "success" => false,
-            "message" => "Invalid user."
+            "message" => "Invalid user. $userid"
         ));
         exit;
     }
@@ -42,7 +42,11 @@
     session_start();
     /* Code in the below if statement from "Cross-Site Request Forgery" section of Web Security 2 class wiki */
     if(!hash_equals($_SESSION['token'], $token)){
-        die("Request forgery detected");
+        echo json_encode(array(
+            "success" => false,
+            "message" => "Request forgery detected."
+        ));
+        exit;
     }
     /* All the code below was obtained from the "Checking Passwords" section example in the Web Security 2 class wiki */
         require 'database.php';

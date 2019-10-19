@@ -117,15 +117,10 @@
     </script>
     <h1><span id="month">Month</span> <span id="year">Year</span></h1>
     <div id="welcome">
-        <?php 
-            ini_set("session.cookie_httponly", 1);
-            session_start();
-            echo "<h2 id='welcome'> Hello, ";
-            echo $_SESSION['username'];
-            echo "</h2>"
-        ?>
-            <input type='hidden' id='token' value='<?php echo $_SESSION['token'];?>' />
-            <input type='hidden' id='userid' value='<?php echo $_SESSION['user_id'];?>' />
+        <?php session_start(); ?>
+        <h2 id="welcome">Hello, <span id="usrnm"></span></h2>
+        <input type='hidden' id='token' value='<?php echo $_SESSION['token'];?>' />
+        <input type='hidden' id='userid' value='<?php echo $_SESSION['user_id'];?>' />
     </div>
     <div id="yesuser">
         <button id="logout">Log out</button><br><br>
@@ -200,6 +195,8 @@
         if (test==1){
             document.getElementById("nonuser").style.visibility = "hidden";
             document.getElementById("yesuser").style.visibility = "visible";
+            document.getElementById("userid").setAttribute("value", sessionStorage.getItem("userid"));
+            document.getElementById("usrnm").textContent = sessionStorage.getItem("usrnm");
             document.getElementById("welcome").style.display = "block";
         }
         else{
@@ -317,7 +314,6 @@
             sessionStorage.removeItem("loggedin");
             sessionStorage.setItem("loggedin", 0);
             whatToDisplay();
-
         }
     </script>
     <script>
@@ -325,16 +321,15 @@
         function loginChecker(event) {
             const username = document.getElementById("username").value; // Get the username from the form
             const password = document.getElementById("password").value; // Get the password from the form
-
             // Make a URL-encoded string for passing POST data:
             const data = { 'username': username, 'password': password };
-            fetch("login_ajax.php", {
+            fetch("logger2.php", {
                     method: 'POST',
                     body: JSON.stringify(data),
                     headers: { 'content-type': 'application/json' }
                 })
                 .then(res => res.json())
-                .then(response => {console.log('Success:', JSON.stringify(response)); loginDisplay(JSON.stringify(response))})
+                .then(response => {console.log('Success'); loginDisplay(JSON.stringify(response))})
                 .catch(error => console.error('Error:',error))
         }
 
@@ -344,6 +339,10 @@
                 // .style.visibility found on https://www.w3schools.com/jsref/prop_style_visibility.asp
                 document.getElementById("nonuser").style.visibility = "hidden";
                 document.getElementById("yesuser").style.visibility = "visible";
+                sessionStorage.setItem("usrnm", jsonData.usrnm);
+                sessionStorage.setItem("userid", jsonData.userid);
+                document.getElementById("userid").setAttribute("value", sessionStorage.getItem("userid"));
+                document.getElementById("usrnm").textContent = sessionStorage.getItem("usrnm");
                 document.getElementById("welcome").style.display = "block";
                 sessionStorage.removeItem("loggedin");
                 sessionStorage.setItem("loggedin", 1);
