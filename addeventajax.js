@@ -3,9 +3,8 @@ function addEventAjax(event) {
     const date = String(document.getElementById("date1").value);
     const time = String(document.getElementById("time1").value);
     const token = document.getElementById("token").value;
-    const userid = document.getElementById("userid").value;
     // Make a URL-encoded string for passing POST data:
-    const data = { 'eventcontent': eventcontent, 'date': date, 'time': time, 'token': token, "userid": userid };
+    const data = { 'eventcontent': eventcontent, 'date': date, 'time': time, 'token': token };
 
     fetch("addevent_ajax.php", {
             method: 'POST',

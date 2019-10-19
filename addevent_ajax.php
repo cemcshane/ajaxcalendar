@@ -6,7 +6,6 @@
     $date = (string) $json_obj['date'];
     $time = (string) $json_obj['time'];
     $token = (string) $json_obj['token'];
-    // $userid = (int) $json_obj['userid'];
     ini_set("session.cookie_httponly", 1);
     session_start();
     $userid = $_SESSION['user_id'];
@@ -37,7 +36,7 @@
     if(!preg_match('/^[1-9]+[0-9]*$/', $userid)){
         echo json_encode(array(
             "success" => false,
-            "message" => "Invalid user. $userid"
+            "message" => "Invalid user."
         ));
         exit;
     }
