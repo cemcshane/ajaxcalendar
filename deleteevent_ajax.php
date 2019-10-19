@@ -59,20 +59,34 @@
         $timedigparts = explode(":", $time);
         $time1 = (int) $timedigparts[0];
         $time2 = (int) $timedigparts[1];
-        $stmt = $mysqli->prepare("insert into events (event_user_id, content, year, month, day, time1, time2) values (?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $mysqli->prepare("select event_id from events where event_user_id=? and content=? and year=? and month=? and day=? and time1=? and time2=?");
         if(!$stmt){
             echo json_encode(array(
                 "success" => false,
-                "message" => "Query Prep Failed: $mysqli->error"
+                "message" => "Query Prep Failed1: $mysqli->error"
             ));
             exit;
         }
         $stmt->bind_param('isiiiii', $userid, $event, $year, $month, $day, $time1, $time2);
         $stmt->execute();
+        $stmt->bind_result($eventid);
+        $stmt->fetch();
+        $stmt->close();
+        require 'database.php';
+        $stmt = $mysqli->prepare("delete from events where event_id=?");
+        if(!$stmt){
+            echo json_encode(array(
+                "success" => false,
+                "message" => "Query Prep Failed1: $mysqli->error"
+            ));
+            exit;
+        }
+        $stmt->bind_param('i', $eventid);
+        $stmt->execute();
         $stmt->close();
         echo json_encode(array(
             "success" => true,
-            "message" => "Your event has been added successfully!"
+            "message" => "Your event has been deleted successfully!"
         ));
         exit;
     ?>

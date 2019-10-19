@@ -135,6 +135,7 @@
         </div>
         <!-- date and input types found on https://www.w3schools.com/html/html_form_input_types.asp-->
         <script src="addeventajax.js"></script>
+        <script src="deleteeventajax.js"></script>
         <script>
         document.getElementById("welcome").style.display = "none";
         document.getElementById("logout").addEventListener("click", function(event){document.getElementById("buttondisplay").textContent = 
@@ -145,7 +146,7 @@
         document.getElementById("addevent").addEventListener("click", addEventAjax, false);},false);
         document.getElementById("showdelete").addEventListener("click", function(event){document.getElementById("buttondisplay").innerHTML = 
         '<h3>Delete an event:</h3><label>Event: <input type="text" id="eventcontent2" placeholder="Title" /></label><br><br><label>Date: <input type="date" id="date2"/></label><label>Time: <input type="time" id="time2" /></label><br><br><button id="deleteevent">Delete</button>';
-        },false);
+        document.getElementById("deleteevent").addEventListener("click", deleteEventAjax, false);},false);
         document.getElementById("showedit").addEventListener("click", function(event){document.getElementById("buttondisplay").innerHTML = 
         '<h3>Edit an event:</h3><label><strong>Choose the event you would like to modify: </strong><input type="text" id="eventcontent3" placeholder="Event Title" /></label><label>Date: <input type="date3" id="date"/></label><label>Time: <input type="time" id="time3" /></label><br><br><label><strong>Modified event input: </strong><input type="text" id="eventcontent4" placeholder="Event Title" /></label><label>Date: <input type="date" id="date4"/></label><label>Time: <input type="time" id="time4" /></label></label><br><br><button id="editevent">Modify</button>';
         },false);
