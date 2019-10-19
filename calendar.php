@@ -116,29 +116,42 @@
         }
     </script>
     <h1><span id="month">Month</span> <span id="year">Year</span></h1>
+    <div id="welcome">
+        <?php 
+            ini_set("session.cookie_httponly", 1);
+            session_start();
+            echo "<h2 id='welcome'> Hello, ";
+            echo $_SESSION['username'];
+            echo "</h2>"
+        ?>
+            <input type='hidden' id='token' value='<?php echo $_SESSION['token'];?>' />
+            <input type='hidden' id='userid' value='<?php echo $_SESSION['user_id'];?>' />
+    </div>
     <div id="yesuser">
         <button id="logout">Log out</button><br><br>
         <button id="showadd">Add an event</button> 
         <button id="showedit">Edit an event</button> 
-        <button id="showdelete">Delete an event</button>
+        <button id="showdelete">Delete an event</button><br>
         <div id="buttondisplay">
              
         </div>
         <!-- date and input types found on https://www.w3schools.com/html/html_form_input_types.asp-->
+        <script type="text/javascript" src="addeventajax.js"></script>
         <script>
+        document.getElementById("welcome").style.display = "none";
         document.getElementById("logout").addEventListener("click", function(event){document.getElementById("buttondisplay").textContent = 
         ' ';
         },false);
-        document.getElementById("showadd").addEventListener("click", function(event){document.getElementById("buttondisplay").innerHTML = 
-        '<h3>Add an event:</h3><label>Event: <input type="text" id="eventcontent" placeholder="Title" /></label><br><br><label>Date: <input type="date" id="date"/></label><label>Time: <input type="time" id="time" /></label><br><br><button id="addevent">Add</button>';
-        },false);
+        document.getElementById("showadd").addEventListener("click", function(event){ document.getElementById("buttondisplay").innerHTML = 
+        '<h3>Add an event:</h3><label>Event: <input type="text" id="eventcontent1" placeholder="Title" /></label><br><br><label>Date: <input type="date" id="date1"/></label><label>Time: <input type="time" id="time1" /></label><br><br><button id="addevent">Add</button>';
+        document.getElementById("addevent").addEventListener("click", addEventAjax, false);},false);
         document.getElementById("showdelete").addEventListener("click", function(event){document.getElementById("buttondisplay").innerHTML = 
-        '<h3>Delete an event:</h3><label>Event: <input type="text" id="eventcontent" placeholder="Title" /></label><br><br><label>Date: <input type="date" id="date"/></label><label>Time: <input type="time" id="time" /></label><br><br><button id="deleteevent">Delete</button>';
+        '<h3>Delete an event:</h3><label>Event: <input type="text" id="eventcontent2" placeholder="Title" /></label><br><br><label>Date: <input type="date" id="date2"/></label><label>Time: <input type="time" id="time2" /></label><br><br><button id="deleteevent">Delete</button>';
         },false);
         document.getElementById("showedit").addEventListener("click", function(event){document.getElementById("buttondisplay").innerHTML = 
-        '<h3>Edit an event:</h3><label><strong>Choose the event you would like to modify: </strong><input type="text" id="eventcontent" placeholder="Event Title" /></label><label>Date: <input type="date" id="date"/></label><label>Time: <input type="time" id="time" /></label><br><br><label><strong>Modified event input: </strong><input type="text" id="eventcontent" placeholder="Event Title" /></label><label>Date: <input type="date" id="date"/></label><label>Time: <input type="time" id="time" /></label></label><br><br><button id="editevent">Modify</button>';
+        '<h3>Edit an event:</h3><label><strong>Choose the event you would like to modify: </strong><input type="text" id="eventcontent3" placeholder="Event Title" /></label><label>Date: <input type="date3" id="date"/></label><label>Time: <input type="time" id="time3" /></label><br><br><label><strong>Modified event input: </strong><input type="text" id="eventcontent4" placeholder="Event Title" /></label><label>Date: <input type="date" id="date4"/></label><label>Time: <input type="time" id="time4" /></label></label><br><br><button id="editevent">Modify</button>';
         },false);
-        </script> 
+        </script>
     </div>
     <div id="nonuser">
         <!-- Both forms below taken and modified from "Logging in a User" example on AJAX class wiki -->
@@ -186,11 +199,13 @@
         let test = sessionStorage.getItem("loggedin");
         if (test==1){
             document.getElementById("nonuser").style.visibility = "hidden";
-            document.getElementById("yesuser").style.visibility = "visible";             
+            document.getElementById("yesuser").style.visibility = "visible";
+            document.getElementById("welcome").style.display = "block";
         }
         else{
             document.getElementById("yesuser").style.visibility = "hidden";
             document.getElementById("nonuser").style.visibility = "visible";
+            document.getElementById("welcome").style.display = "none";
         }
     }
     </script>
@@ -329,6 +344,7 @@
                 // .style.visibility found on https://www.w3schools.com/jsref/prop_style_visibility.asp
                 document.getElementById("nonuser").style.visibility = "hidden";
                 document.getElementById("yesuser").style.visibility = "visible";
+                document.getElementById("welcome").style.display = "block";
                 sessionStorage.removeItem("loggedin");
                 sessionStorage.setItem("loggedin", 1);
             }
