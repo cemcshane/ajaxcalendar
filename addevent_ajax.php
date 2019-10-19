@@ -6,7 +6,10 @@
     $date = (string) $json_obj['date'];
     $time = (string) $json_obj['time'];
     $token = (string) $json_obj['token'];
-    $userid = (int) $json_obj['userid'];
+    // $userid = (int) $json_obj['userid'];
+    ini_set("session.cookie_httponly", 1);
+    session_start();
+    $userid = $_SESSION['user_id'];
     // Regular expression for event description found on https://stackoverflow.com/questions/4297173/regex-for-description-form-input
     if(!preg_match("/^[0-9a-z A-ZäöüÄÖÜ_\-']+$/", $event)){
         echo json_encode(array(

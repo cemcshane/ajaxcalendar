@@ -117,10 +117,13 @@
     </script>
     <h1><span id="month">Month</span> <span id="year">Year</span></h1>
     <div id="welcome">
-        <?php session_start(); ?>
-        <h2 id="welcome">Hello, <span id="usrnm"></span></h2>
-        <input type='hidden' id='token' value='<?php echo $_SESSION['token'];?>' />
-        <input type='hidden' id='userid' value='<?php echo $_SESSION['user_id'];?>' />
+        <?php 
+        ini_set("session.cookie_httponly", 1);
+        session_start();
+        ?>
+        <h2 id="greeting">Hello, <span id="usrnm"></span></h2>
+        <input type='hidden' id='token' value='<?php echo $_SESSION["token"];?>' />
+        <input type='hidden' id='userid' value='<?php echo $_SESSION["user_id"];?>' />
     </div>
     <div id="yesuser">
         <button id="logout">Log out</button><br><br>
@@ -131,7 +134,7 @@
              
         </div>
         <!-- date and input types found on https://www.w3schools.com/html/html_form_input_types.asp-->
-        <script type="text/javascript" src="addeventajax.js"></script>
+        <script src="addeventajax.js"></script>
         <script>
         document.getElementById("welcome").style.display = "none";
         document.getElementById("logout").addEventListener("click", function(event){document.getElementById("buttondisplay").textContent = 
@@ -153,12 +156,12 @@
         <label id="reg">Create an account: <input type="text" id="createusername" placeholder="Username" /></label>
         <input type="password" id="createpassword" placeholder="Password" />
         <button id="signup_btn">Register</button>
-        <script type="text/javascript" src="registerajax.js"></script>
+        <script src="registerajax.js"></script>
         <br><br>
         <label id="signin">Sign in: <input type="text" id="username" placeholder="Username" /></label>
         <input type="password" id="password" placeholder="Password" />
         <button id="login_btn">Log In</button>
-        <script type="text/javascript" src="loginajax.js"></script>
+        <script src="loginajax.js"></script>
         <br><br><br>
     </div>
     <button id="prevpg">Previous Month</button><button id="nextpg">Next Month</button>
