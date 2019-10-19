@@ -77,13 +77,20 @@
         if(!$stmt){
             echo json_encode(array(
                 "success" => false,
-                "message" => "Event not found."
+                "message" => "Query Prep Failed. Check your input fields."
             ));
             exit;
         }
         $stmt->bind_param('i', $eventid);
         $stmt->execute();
         $stmt->close();
+        if ($eventid==null){
+            echo json_encode(array(
+                "success" => false,
+                "message" => "Event not found."
+            ));
+            exit;
+        }
         echo json_encode(array(
             "success" => true,
             "message" => "Your event has been deleted successfully!"

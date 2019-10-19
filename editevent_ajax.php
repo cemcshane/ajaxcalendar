@@ -73,6 +73,13 @@
         $stmt->bind_result($eventid);
         $stmt->fetch();
         $stmt->close();
+        if ($eventid==null){
+            echo json_encode(array(
+                "success" => false,
+                "message" => "Event not found."
+            ));
+            exit;
+        }        
         require 'database.php';
         $dateparts2 = explode("-", $datenew);
         $yearnew = (int) $dateparts2[0];
@@ -85,7 +92,7 @@
         if(!$stmt){
             echo json_encode(array(
                 "success" => false,
-                "message" => "Event not found."
+                "message" => "Query Prep Failed. Check your input fields."
             ));
             exit;
         }
