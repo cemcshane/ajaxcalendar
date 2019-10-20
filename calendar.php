@@ -191,6 +191,7 @@
     </table>
     <script>
     document.addEventListener("DOMContentLoaded", whatToDisplay, false);
+    document.addEventListener("DOMContentLoaded", whatToDisplay, false);
     function whatToDisplay(){
         // sessionStorage info found on https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage
         if (sessionStorage.getItem("loggedin")==null){
@@ -283,42 +284,75 @@
             var jsonData = JSON.parse(entr);
             let respo = "";
             let firstdt = new Date(dt.getFullYear(), dt.getMonth(), 1);
-            for (let item of jsonData){
-                if(item.time1 > 12){
-                    if(item.time2 < 10){
-                        respo += `<li>${item.time1-12}:0${item.time2} PM: ${item.event}</li>`;
+            // If statement found on https://stackoverflow.com/questions/18884249/checking-whether-something-is-iterable/32538867
+            if (typeof jsonData[Symbol.iterator] === 'function'){
+                for (let item of jsonData){
+                    if(item.time1 > 12){
+                        if(item.time2 < 10){
+                            respo += `<li>${item.time1-12}:0${item.time2} PM: ${item.event}</li>`;
+                        }
+                        else{
+                            respo += `<li>${item.time1-12}:${item.time2} PM: ${item.event}</li>`;
+                        }
                     }
                     else{
-                        respo += `<li>${item.time1-12}:${item.time2} PM: ${item.event}</li>`;
+                        if(item.time2 < 10){
+                            respo += `<li>${item.time1}:0${item.time2} AM: ${item.event}</li>`;
+                        }
+                        else{
+                            respo += `<li>${item.time1}:${item.time2} AM: ${item.event}</li>`;
+                        }
                     }
-                }
-                else{
-                    if(item.time2 < 10){
-                        respo += `<li>${item.time1}:0${item.time2} AM: ${item.event}</li>`;
-                    }
-                    else{
-                        respo += `<li>${item.time1}:${item.time2} AM: ${item.event}</li>`;
-                    }
-                }
+                }                
             }
             document.getElementById(coords[firstdt.getDay()+dy]).lastChild.innerHTML= respo;
         }
         for (j=1; j<=6; j++){
-            if(day <= Number(zeroDate.getDate())){
-                for (i=1; i<=7; i++){
-                    if (day <= Number(zeroDate.getDate())){
-                        if (j==1){
-                            // getDay() function found on https://www.w3schools.com/jsref/jsref_getday.asp
-                            if(i>first.getDay()){
+                if(day <= Number(zeroDate.getDate())){
+                    for (i=1; i<=7; i++){
+                        if (day <= Number(zeroDate.getDate())){
+                            if (j==1){
+                                // getDay() function found on https://www.w3schools.com/jsref/jsref_getday.asp
+                                if(i>first.getDay()){
+                                    document.getElementById(`(${j},${i})`).firstChild.textContent = day;
+                                    displayEvents(date, day);
+                                    day++;
+                                }
+                            }
+                            else{
                                 document.getElementById(`(${j},${i})`).firstChild.textContent = day;
                                 displayEvents(date, day);
                                 day++;
                             }
                         }
-                        else{
-                            document.getElementById(`(${j},${i})`).firstChild.textContent = day;
-                            displayEvents(date, day);
-                            day++;
+                    }
+                }
+            }
+        function mainMonth(){
+            let date = new Date();
+            document.getElementById("month").textContent = nameMonth(date.getMonth());
+            // getFullYear() function found on https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear
+            document.getElementById("year").textContent = date.getFullYear();
+            let first = new Date(2019, date.getMonth(), 1);
+            let zeroDate = new Date(2019, date.getMonth()+1, 0);
+            let day = 1;
+            for (j=1; j<=6; j++){
+                if(day <= Number(zeroDate.getDate())){
+                    for (i=1; i<=7; i++){
+                        if (day <= Number(zeroDate.getDate())){
+                            if (j==1){
+                                // getDay() function found on https://www.w3schools.com/jsref/jsref_getday.asp
+                                if(i>first.getDay()){
+                                    document.getElementById(`(${j},${i})`).firstChild.textContent = day;
+                                    displayEvents(first, day);
+                                    day++;
+                                }
+                            }
+                            else{
+                                document.getElementById(`(${j},${i})`).firstChild.textContent = day;
+                                displayEvents(first, day);
+                                day++;
+                            }
                         }
                     }
                 }
@@ -413,10 +447,12 @@
             sessionStorage.removeItem("loggedin");
             sessionStorage.setItem("loggedin", 0);
             whatToDisplay();
+            mainMonth();
         }
     </script>
     <script>
         document.getElementById("login_btn").addEventListener("click", loginChecker, false);
+        
         function loginChecker(event) {
             const username = document.getElementById("username").value; // Get the username from the form
             const password = document.getElementById("password").value; // Get the password from the form
@@ -445,6 +481,7 @@
                 document.getElementById("welcome").style.display = "block";
                 sessionStorage.removeItem("loggedin");
                 sessionStorage.setItem("loggedin", 1);
+                mainMonth();
             }
         }
     </script>
