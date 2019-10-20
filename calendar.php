@@ -133,7 +133,7 @@
         <div id="buttondisplay">
              
         </div>
-        <!-- date and input types found on https://www.w3schools.com/html/html_form_input_types.asp-->
+        <!-- date and time input types found on https://www.w3schools.com/html/html_form_input_types.asp-->
         <script src="addeventajax.js"></script>
         <script src="deleteeventajax.js"></script>
         <script src="editeventajax.js"></script>
@@ -183,7 +183,7 @@
             for($row=1; $row<=6; $row++){
                 echo "<tr>";
                 for ($col=1; $col<=7; $col++){
-                    echo "<td id='($row,$col)'><div class='date'></div><div class='event'></div> </td>";
+                    echo "<td id='($row,$col)'><div class='date'></div><div class='events'></div> </td>";
                 }
                 echo "</tr>";              
             }
@@ -219,6 +219,90 @@
         let first = new Date(2019, date.getMonth(), 1);
         let zeroDate = new Date(2019, date.getMonth()+1, 0);
         let day = 1;
+        function displayEvents(givendate, daynum){
+            const displaymonth = givendate.getMonth()+1;
+            // alert(displaymonth);
+            const displayyear = givendate.getFullYear();
+            // alert(displayyear);
+            const displayday = daynum;
+            const token = document.getElementById("token").value;
+            const data = { 'displaymonth': displaymonth, 'displayyear': displayyear, 'displayday': displayday, 'token': token };
+            fetch("displayevents_ajax.php", {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: { 'content-type': 'application/json' }
+                })
+                .then(res => res.json())
+                .then(response => eventParser(JSON.stringify(response), givendate, daynum))
+                .catch(error => console.error('Error:',error))
+        }
+        const coords = new Array();
+        coords[1] = "(1,1)";
+        coords[2] = "(1,2)";
+        coords[3] = "(1,3)";
+        coords[4] = "(1,4)";
+        coords[5] = "(1,5)";
+        coords[6] = "(1,6)";
+        coords[7] = "(1,7)";
+        coords[8] = "(2,1)";
+        coords[9] = "(2,2)";
+        coords[10] = "(2,3)";
+        coords[11] = "(2,4)";
+        coords[12] = "(2,5)";
+        coords[13] = "(2,6)";
+        coords[14] = "(2,7)";
+        coords[15] = "(3,1)";
+        coords[16] = "(3,2)";
+        coords[17] = "(3,3)";
+        coords[18] = "(3,4)";
+        coords[19] = "(3,5)";
+        coords[20] = "(3,6)";
+        coords[21] = "(3,7)";
+        coords[22] = "(4,1)";
+        coords[23] = "(4,2)";
+        coords[24] = "(4,3)";
+        coords[25] = "(4,4)";
+        coords[26] = "(4,5)";
+        coords[27] = "(4,6)";
+        coords[28] = "(4,7)";
+        coords[29] = "(5,1)";
+        coords[30] = "(5,2)";
+        coords[31] = "(5,3)";
+        coords[32] = "(5,4)";
+        coords[33] = "(5,5)";
+        coords[34] = "(5,6)";
+        coords[35] = "(5,7)";
+        coords[36] = "(6,1)";
+        coords[37] = "(6,2)";
+        coords[38] = "(6,3)";
+        coords[39] = "(6,4)";
+        coords[40] = "(6,5)";
+        coords[41] = "(6,6)";
+        coords[42] = "(6,7)";
+        function eventParser(entr, dt, dy){
+            var jsonData = JSON.parse(entr);
+            let respo = "";
+            let firstdt = new Date(dt.getFullYear(), dt.getMonth(), 1);
+            for (let item of jsonData){
+                if(item.time1 > 12){
+                    if(item.time2 < 10){
+                        respo += `${item.time1-12}:0${item.time2} PM: ${item.event}<br>`;
+                    }
+                    else{
+                        respo += `${item.time1-12}:${item.time2} PM: ${item.event}<br>`;
+                    }
+                }
+                else{
+                    if(item.time2 < 10){
+                        respo += `${item.time1}:0${iem.time2} AM: ${item.event}<br>`;
+                    }
+                    else{
+                        respo += `${item.time1}:${item.time2} AM: ${item.event}<br>`;
+                    }
+                } 
+            }
+            document.getElementById(coords[firstdt.getDay()+dy]).lastChild.textContent = respo;
+        }
         for (j=1; j<=6; j++){
             if(day <= Number(zeroDate.getDate())){
                 for (i=1; i<=7; i++){
@@ -227,11 +311,13 @@
                             // getDay() function found on https://www.w3schools.com/jsref/jsref_getday.asp
                             if(i>first.getDay()){
                                 document.getElementById(`(${j},${i})`).firstChild.textContent = day;
+                                displayEvents(date, day);
                                 day++;
                             }
                         }
                         else{
                             document.getElementById(`(${j},${i})`).firstChild.textContent = day;
+                            displayEvents(date, day);
                             day++;
                         }
                     }
@@ -240,10 +326,10 @@
         }
         function nextPage(){
             let currdate = date;
+            // getFullYear() function found on https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear
             let currMonth = new Month(currdate.getFullYear(), currdate.getMonth());
             let nowMonth = currMonth.nextMonth();
             document.getElementById("month").textContent = nameMonth(nowMonth.month);
-            // getFullYear() function found on https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear
             document.getElementById("year").textContent = nowMonth.year;
             let first = new Date(nowMonth.year, nowMonth.month, 1);
             let zeroDate = new Date(nowMonth.year, nowMonth.month+1, 0);
