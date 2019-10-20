@@ -183,7 +183,7 @@
             for($row=1; $row<=6; $row++){
                 echo "<tr>";
                 for ($col=1; $col<=7; $col++){
-                    echo "<td id='($row,$col)'><div class='date'></div><div class='events'></div> </td>";
+                    echo "<td id='($row,$col)'><div class='date'></div><ul class='events'></ul> </td>";
                 }
                 echo "</tr>";              
             }
@@ -286,22 +286,22 @@
             for (let item of jsonData){
                 if(item.time1 > 12){
                     if(item.time2 < 10){
-                        respo += `${item.time1-12}:0${item.time2} PM: ${item.event}<br>`;
+                        respo += `${item.time1-12}:0${item.time2} PM: ${item.event} `;
                     }
                     else{
-                        respo += `${item.time1-12}:${item.time2} PM: ${item.event}<br>`;
+                        respo += `${item.time1-12}:${item.time2} PM: ${item.event} `;
                     }
                 }
                 else{
                     if(item.time2 < 10){
-                        respo += `${item.time1}:0${iem.time2} AM: ${item.event}<br>`;
+                        respo += `${item.time1}:0${item.time2} AM: ${item.event} `;
                     }
                     else{
-                        respo += `${item.time1}:${item.time2} AM: ${item.event}<br>`;
+                        respo += `${item.time1}:${item.time2} AM: ${item.event} `;
                     }
-                } 
+                }
             }
-            document.getElementById(coords[firstdt.getDay()+dy]).lastChild.textContent = respo;
+            document.getElementById(coords[firstdt.getDay()+dy]).lastChild.textContent= respo;
         }
         for (j=1; j<=6; j++){
             if(day <= Number(zeroDate.getDate())){
@@ -331,7 +331,7 @@
             let nowMonth = currMonth.nextMonth();
             document.getElementById("month").textContent = nameMonth(nowMonth.month);
             document.getElementById("year").textContent = nowMonth.year;
-            let first = new Date(nowMonth.year, nowMonth.month, 1);
+            let first1 = new Date(nowMonth.year, nowMonth.month, 1);
             let zeroDate = new Date(nowMonth.year, nowMonth.month+1, 0);
             let day = 1;
             for (j=1; j<=6; j++){
@@ -339,34 +339,38 @@
                         if (day <= Number(zeroDate.getDate())){
                             if (j==1){
                                 // getDay() function found on https://www.w3schools.com/jsref/jsref_getday.asp
-                                if(i>first.getDay()){
+                                if(i>first1.getDay()){
                                     document.getElementById(`(${j},${i})`).firstChild.textContent = day;
+                                    displayEvents(first1, day);
                                     day++;
                                 }
                                 else{
                                     document.getElementById(`(${j},${i})`).firstChild.textContent = "";
+                                    document.getElementById(`(${j},${i})`).lastChild.textContent = "";
                                 }
                             }
                             else{
                                 document.getElementById(`(${j},${i})`).firstChild.textContent = day;
+                                displayEvents(first1, day);
                                 day++;
                             }
                         }
                         else{
                             document.getElementById(`(${j},${i})`).firstChild.textContent = "";
+                            document.getElementById(`(${j},${i})`).lastChild.textContent = "";
                         }
                     }
             }
-            date = first;
+            date = first1;
         }
         function prevPage(){
             let currdate = date;
+            // getFullYear() function found on https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear
             let currMonth = new Month(currdate.getFullYear(), currdate.getMonth());
             let nowMonth = currMonth.prevMonth();
             document.getElementById("month").textContent = nameMonth(nowMonth.month);
-            // getFullYear() function found on https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear
             document.getElementById("year").textContent = nowMonth.year;
-            let first = new Date(nowMonth.year, nowMonth.month, 1);
+            let first2 = new Date(nowMonth.year, nowMonth.month, 1);
             let zeroDate = new Date(nowMonth.year, nowMonth.month+1, 0);
             let day = 1;
             for (j=1; j<=6; j++){
@@ -374,25 +378,29 @@
                         if (day <= Number(zeroDate.getDate())){
                             if (j==1){
                                 // getDay() function found on https://www.w3schools.com/jsref/jsref_getday.asp
-                                if(i>first.getDay()){
+                                if(i>first2.getDay()){
                                     document.getElementById(`(${j},${i})`).firstChild.textContent = day;
+                                    displayEvents(first2, day);
                                     day++;
                                 }
                                 else{
                                     document.getElementById(`(${j},${i})`).firstChild.textContent = "";
+                                    document.getElementById(`(${j},${i})`).lastChild.textContent = "";
                                 }
                             }
                             else{
                                 document.getElementById(`(${j},${i})`).firstChild.textContent = day;
+                                displayEvents(first2, day);
                                 day++;
                             }
                         }
                         else{
                             document.getElementById(`(${j},${i})`).firstChild.textContent = "";
+                            document.getElementById(`(${j},${i})`).lastChild.textContent = "";
                         }
                     }
             }
-            date = first;
+            date = first2;
         }
         document.getElementById("prevpg").addEventListener("click", prevPage, false);
         document.getElementById("nextpg").addEventListener("click", nextPage, false);
