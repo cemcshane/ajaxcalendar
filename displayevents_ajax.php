@@ -47,7 +47,7 @@
     }
     /* All the code below was obtained from the "Checking Passwords" section example in the Web Security 2 class wiki */
         require 'database.php';
-        $stmt = $mysqli->prepare("select event_id, content, time1, time2 from events where event_user_id=? and year=? and month=? and day=? order by time1 asc");
+        $stmt = $mysqli->prepare("select event_id, content, time1, time2 from events where event_user_id=? and year=? and month=? and day=? order by time1 asc, time2 asc");
         if(!$stmt){
             echo json_encode(array(
                 "success" => false,

@@ -12,5 +12,5 @@ function addEventAjax(event) {
             headers: { 'content-type': 'application/json' }
         })
         .then(response => response.json())
-        .then(data => {console.log(data.success ? "Your event has been added." : `Your event has not been added. ${data.message}`); alert(data.message)});
+        .then(data => {console.log(data.success ? "Your event has been added." : `Your event has not been added. ${data.message}`); alert(data.message)})
 }

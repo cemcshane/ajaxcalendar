@@ -144,7 +144,8 @@
         },false);
         document.getElementById("showadd").addEventListener("click", function(event){ document.getElementById("buttondisplay").innerHTML = 
         '<h3>Add an event:</h3><label>Event: <input type="text" id="eventcontent1" placeholder="Title" /></label><br><br><label>Date: <input type="date" id="date1"/></label><label>Time: <input type="time" id="time1" /></label><br><br><button id="addevent">Add</button>';
-        document.getElementById("addevent").addEventListener("click", addEventAjax, false);},false);
+        document.getElementById("addevent").addEventListener("click", addEventAjax, false);
+        document.getElementById("addevent").addEventListener("click", mainMonth, false);},false);
         document.getElementById("showdelete").addEventListener("click", function(event){document.getElementById("buttondisplay").innerHTML = 
         '<h3>Delete an event:</h3><label>Event: <input type="text" id="eventcontent2" placeholder="Title" /></label><br><br><label>Date: <input type="date" id="date2"/></label><label>Time: <input type="time" id="time2" /></label><br><br><button id="deleteevent">Delete</button>';
         document.getElementById("deleteevent").addEventListener("click", deleteEventAjax, false);},false);
@@ -190,7 +191,7 @@
         ?>
     </table>
     <script>
-    document.addEventListener("DOMContentLoaded", whatToDisplay, false);
+    document.getElementById("login_btn").addEventListener("click", loginAjax, false);
     document.addEventListener("DOMContentLoaded", whatToDisplay, false);
     function whatToDisplay(){
         // sessionStorage info found on https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage
@@ -213,6 +214,7 @@
     }
     </script>
     <script>
+        document.getElementById("login_btn").addEventListener("click", mainMonth, false);
         let date = new Date();
         document.getElementById("month").textContent = nameMonth(date.getMonth());
         // getFullYear() function found on https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear
@@ -446,8 +448,8 @@
             .catch(error => console.error('Error:', error))
             sessionStorage.removeItem("loggedin");
             sessionStorage.setItem("loggedin", 0);
-            whatToDisplay();
             mainMonth();
+            whatToDisplay();
         }
     </script>
     <script>
