@@ -183,7 +183,7 @@
             for($row=1; $row<=6; $row++){
                 echo "<tr>";
                 for ($col=1; $col<=7; $col++){
-                    echo "<td id='($row,$col)'><div class='date'></div><ul class='events'></ul> </td>";
+                    echo "<td id='($row,$col)'><div class='date'></div><ul class='events'> </ul></td>";
                 }
                 echo "</tr>";              
             }
@@ -286,22 +286,22 @@
             for (let item of jsonData){
                 if(item.time1 > 12){
                     if(item.time2 < 10){
-                        respo += `${item.time1-12}:0${item.time2} PM: ${item.event} `;
+                        respo += `<li>${item.time1-12}:0${item.time2} PM: ${item.event}</li>`;
                     }
                     else{
-                        respo += `${item.time1-12}:${item.time2} PM: ${item.event} `;
+                        respo += `<li>${item.time1-12}:${item.time2} PM: ${item.event}</li>`;
                     }
                 }
                 else{
                     if(item.time2 < 10){
-                        respo += `${item.time1}:0${item.time2} AM: ${item.event} `;
+                        respo += `<li>${item.time1}:0${item.time2} AM: ${item.event}</li>`;
                     }
                     else{
-                        respo += `${item.time1}:${item.time2} AM: ${item.event} `;
+                        respo += `<li>${item.time1}:${item.time2} AM: ${item.event}</li>`;
                     }
                 }
             }
-            document.getElementById(coords[firstdt.getDay()+dy]).lastChild.textContent= respo;
+            document.getElementById(coords[firstdt.getDay()+dy]).lastChild.innerHTML= respo;
         }
         for (j=1; j<=6; j++){
             if(day <= Number(zeroDate.getDate())){
