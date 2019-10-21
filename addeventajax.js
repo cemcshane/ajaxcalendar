@@ -1,8 +1,8 @@
 function addEventAjax(event) {
-    const eventcontent = document.getElementById("eventcontent1").value;
+    const eventcontent = String(document.getElementById("eventcontent1").value);
     const date = String(document.getElementById("date1").value);
     const time = String(document.getElementById("time1").value);
-    const token = document.getElementById("token").value;
+    const token = String(document.getElementById("token").value);
     // Make a URL-encoded string for passing POST data:
     const data = { 'eventcontent': eventcontent, 'date': date, 'time': time, 'token': token };
 

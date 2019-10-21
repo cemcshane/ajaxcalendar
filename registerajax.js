@@ -1,8 +1,8 @@
 // ajax.js
 
 function registerAjax(event) {
-    const createusername = document.getElementById("createusername").value; // Get the username from the form
-    const createpassword = document.getElementById("createpassword").value; // Get the password from the form
+    const createusername = String(document.getElementById("createusername").value); // Get the username from the form
+    const createpassword = String(document.getElementById("createpassword").value); // Get the password from the form
 
     // Make a URL-encoded string for passing POST data:
     const data = { 'createusername': createusername, 'createpassword': createpassword };

@@ -1,8 +1,8 @@
 // ajax.js
 
 function loginAjax(event) {
-    const username = document.getElementById("username").value; // Get the username from the form
-    const password = document.getElementById("password").value; // Get the password from the form
+    const username = String(document.getElementById("username").value); // Get the username from the form
+    const password = String(document.getElementById("password").value); // Get the password from the form
 
     // Make a URL-encoded string for passing POST data:
     const data = { 'username': username, 'password': password };

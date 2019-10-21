@@ -1,8 +1,8 @@
 function deleteEventAjax(event) {
-    const eventcontent = document.getElementById("eventcontent2").value;
+    const eventcontent = String(document.getElementById("eventcontent2").value);
     const date = String(document.getElementById("date2").value);
     const time = String(document.getElementById("time2").value);
-    const token = document.getElementById("token").value;
+    const token = String(document.getElementById("token").value);
     // Make a URL-encoded string for passing POST data:
     const data = { 'eventcontent': eventcontent, 'date': date, 'time': time, 'token': token };
 
