@@ -41,7 +41,7 @@
         ));
         exit;
     }
-    
+    ini_set("session.cookie_httponly", 1);
     session_start();
     /* Code in the below if statement from "Cross-Site Request Forgery" section of Web Security 2 class wiki */
     if(!hash_equals($_SESSION['token'], $token)){
