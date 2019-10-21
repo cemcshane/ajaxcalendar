@@ -128,7 +128,7 @@
     
     <div id="yesuser">
         <button id="logout">Log out</button><br><br>
-        <span><button id="create">Create a text file of this month's events</button> <a download="monthevents.txt" id="downloadlink" style="visibility: hidden">Click here to download</a>
+        <span><button id="create">Create a text file of this month's events</button> <a download="monthevents.txt" id="downloadlink" style="visibility: hidden">Download</a>
         <br><br>
         <button id="showadd">Add an event</button> 
         <button id="showedit">Edit an event</button> 
@@ -215,6 +215,7 @@
         }
         else{
             document.getElementById("yesuser").style.visibility = "hidden";
+            document.getElementById("downloadlink").style.visibility = "hidden";
             document.getElementById("nonuser").style.visibility = "visible";
             document.getElementById("welcome").style.display = "none";
         }
@@ -289,8 +290,10 @@
         coords[40] = "(6,5)";
         coords[41] = "(6,6)";
         coords[42] = "(6,7)";        
-        document.getElementById("nextpg").addEventListener("click", function(event){document.getElementById("downloadlink").style.visibility = "hidden";}, false);
-        document.getElementById("prevpg").addEventListener("click", function(event){document.getElementById("downloadlink").style.visibility = "hidden";}, false);
+        document.getElementById("nextpg").addEventListener("click", function(event){document.getElementById("create").textContent = "Create a text file of this month's events"; document.getElementById("downloadlink").style.visibility = "hidden";}, false);
+        document.getElementById("prevpg").addEventListener("click", function(event){document.getElementById("create").textContent = "Create a text file of this month's events"; document.getElementById("downloadlink").style.visibility = "hidden";}, false);
+        document.getElementById("login_btn").addEventListener("click", function(event){document.getElementById("create").textContent = "Create a text file of this month's events"; document.getElementById("downloadlink").style.visibility = "hidden";}, false);
+        document.getElementById("logout").addEventListener("click", function(event){document.getElementById("create").textContent = "Create a text file of this month's events"; document.getElementById("downloadlink").style.visibility = "hidden";}, false);
         function eventParser(entr, dt, dy){
             var jsonData = JSON.parse(entr);
             let respo = "";

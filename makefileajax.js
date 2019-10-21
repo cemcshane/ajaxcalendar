@@ -86,4 +86,5 @@ function fileParser(entr){
         makeFileAjax();
         let link = document.getElementById('downloadlink');
         link.style.visibility = 'visible';
+        document.getElementById("create").textContent = "Change your events this month? Click to update text file, then download again.";
     }, false);
