@@ -11,6 +11,7 @@ table{
     table-layout: fixed;
 }
 th{
+    background-color: lavender;
     width: 50px;
     height: 35px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
