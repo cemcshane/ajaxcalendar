@@ -125,8 +125,11 @@
         <input type='hidden' id='token' value='<?php echo $_SESSION["token"];?>' />
         <input type='hidden' id='userid' value='<?php echo $_SESSION["user_id"];?>' />
     </div>
+    
     <div id="yesuser">
         <button id="logout">Log out</button><br><br>
+        <span><button id="create">Create a text file of this month's events</button> <a download="monthevents.txt" id="downloadlink" style="visibility: hidden">Click here to download</a>
+        <br><br>
         <button id="showadd">Add an event</button> 
         <button id="showedit">Edit an event</button> 
         <button id="showdelete">Delete an event</button><br>
@@ -134,10 +137,12 @@
              
         </div>
         <!-- date and time input types found on https://www.w3schools.com/html/html_form_input_types.asp-->
+        <script src="makefileajax.js"></script>
         <script src="addeventajax.js"></script>
         <script src="deleteeventajax.js"></script>
         <script src="editeventajax.js"></script>
         <script>
+
         document.getElementById("welcome").style.display = "none";
         document.getElementById("logout").addEventListener("click", function(event){document.getElementById("buttondisplay").textContent = 
         ' ';
@@ -283,7 +288,9 @@
         coords[39] = "(6,4)";
         coords[40] = "(6,5)";
         coords[41] = "(6,6)";
-        coords[42] = "(6,7)";
+        coords[42] = "(6,7)";        
+        document.getElementById("nextpg").addEventListener("click", function(event){document.getElementById("downloadlink").style.visibility = "hidden";}, false);
+        document.getElementById("prevpg").addEventListener("click", function(event){document.getElementById("downloadlink").style.visibility = "hidden";}, false);
         function eventParser(entr, dt, dy){
             var jsonData = JSON.parse(entr);
             let respo = "";
