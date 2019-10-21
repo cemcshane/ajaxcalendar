@@ -1,23 +1,30 @@
 html{
-    background-color: lightgrey;
+    background-color: mintcream;
 }
 table, th, td{
-    border: 1px solid black;
+    border: 2px solid black;
     border-collapse: collapse;
+    border-radius: 5px;
 }
-table{
+table{ 
     width: 1000px;
     table-layout: fixed;
 }
 th{
     width: 50px;
     height: 35px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 td{
     height: 100px;
     text-align: left;
-    vertical-align: top;
-    color: darkblue;    
+    vertical-align: top;   
+}
+.events{
+    color: darkblue;
+}
+.date{
+    font-weight: bold;
 }
 /* Hover attribute found on https://www.w3schools.com/css/css_table.asp */
 tr:hover{
@@ -31,7 +38,8 @@ td:hover{
     font-weight: bold;
 }
 h1{
-    font-size: 40px;
+    font-size: 50px;
+    font-family: inherit;
 }
 #month, #day{
     width: 40px;
