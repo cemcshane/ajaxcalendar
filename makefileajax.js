@@ -1,12 +1,9 @@
-// All code in this file taken and modified from https://jsfiddle.net/taditdash/hkjpzjuj/
+//Code below taken and modified from https://jsfiddle.net/taditdash/hkjpzjuj/
     let textFile = null,
         makeTextFile = function (text) {
             let data = new Blob([text], {
                 type: 'text/plain'
             });
-
-            // If we are replacing a previously generated file we need to
-            // manually revoke the object URL to avoid memory leaks.
             if (textFile !== null) {
                 window.URL.revokeObjectURL(textFile);
             }
@@ -15,6 +12,7 @@
 
             return textFile;
         };
+// Code in this file taken/modified from "Logging in a User" section of AJAX class wiki
 function makeFileAjax(){
     const monthnum = Number(month.indexOf(document.getElementById("month").textContent)+1);
     const year = Number(document.getElementById("year").textContent);
@@ -81,7 +79,7 @@ function fileParser(entr){
     
     ${resp}`;
 }
-
+//Code below taken and modified from https://jsfiddle.net/taditdash/hkjpzjuj/
     document.getElementById('create').addEventListener('click', function () {
         makeFileAjax();
         let link = document.getElementById('downloadlink');

@@ -1,3 +1,4 @@
+// Code in this file modified from "Logging in a User" section of AJAX class wiki
 function addEventAjax(event) {
     const eventcontent = String(document.getElementById("eventcontent1").value);
     const date = String(document.getElementById("date1").value);

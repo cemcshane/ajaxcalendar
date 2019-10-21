@@ -1,13 +1,12 @@
 <?php
+// Code in this file taken/modified from "Logging in a User" section of AJAX class wiki
+header("Content-Type: application/json");
 
-header("Content-Type: application/json"); // Since we are sending a JSON response here (not an HTML document), set the MIME Type to application/json
-
-//Because you are posting the data via fetch(), php has to retrieve it elsewhere.
 $json_str = file_get_contents('php://input');
-//This will store the data into an associative array
+
 $json_obj = json_decode($json_str, true);
 
-//Variables can be accessed as such:
+
 $createusername = (string) $json_obj['createusername'];
 $createpassword = (string) $json_obj['createpassword'];
 if(!preg_match('/^\w+$/', $createusername)){

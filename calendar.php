@@ -128,7 +128,8 @@
     
     <div id="yesuser">
         <button id="logout">Log out</button><br><br>
-        <span><button id="create">Create a text file of this month's events</button> <a download="monthevents.txt" id="downloadlink" style="visibility: hidden">Download</a>
+        <!-- Text file creater button found on https://jsfiddle.net/taditdash/hkjpzjuj/ -->
+        <button id="create">Create a text file of this month's events</button> <a download="monthevents.txt" href="" id="downloadlink" style="visibility: hidden">Download</a>
         <br><br>
         <button id="showadd">Add an event</button> 
         <button id="showedit">Edit an event</button> 
@@ -136,13 +137,12 @@
         <div id="buttondisplay">
              
         </div>
-        <!-- date and time input types found on https://www.w3schools.com/html/html_form_input_types.asp-->
         <script src="makefileajax.js"></script>
         <script src="addeventajax.js"></script>
         <script src="deleteeventajax.js"></script>
         <script src="editeventajax.js"></script>
+        <!-- date and time input types found on https://www.w3schools.com/html/html_form_input_types.asp-->
         <script>
-
         document.getElementById("welcome").style.display = "none";
         document.getElementById("logout").addEventListener("click", function(event){document.getElementById("buttondisplay").textContent = 
         ' ';
@@ -230,11 +230,10 @@
         let first = new Date(2019, date.getMonth(), 1);
         let zeroDate = new Date(2019, date.getMonth()+1, 0);
         let day = 1;
+        // Code taken/modified from "Logging in a User" section of AJAX class wiki
         function displayEvents(givendate, daynum){
             const displaymonth = givendate.getMonth()+1;
-            // alert(displaymonth);
             const displayyear = givendate.getFullYear();
-            // alert(displayyear);
             const displayday = daynum;
             const token = document.getElementById("token").value;
             const data = { 'displaymonth': displaymonth, 'displayyear': displayyear, 'displayday': displayday, 'token': token };
@@ -453,6 +452,7 @@
         document.getElementById("prevpg").addEventListener("click", prevPage, false);
         document.getElementById("nextpg").addEventListener("click", nextPage, false);
         document.getElementById("logout").addEventListener("click", logOut, false);
+        // Code taken/modified from "Logging in a User" section of AJAX class wiki
         function logOut(){
             fetch('unlog.php')
             .then(res => res.json())
@@ -466,11 +466,11 @@
     </script>
     <script>
         document.getElementById("login_btn").addEventListener("click", loginChecker, false);
-        
+        // Code taken/modified from "Logging in a User" section of AJAX class wiki
         function loginChecker(event) {
-            const username = document.getElementById("username").value; // Get the username from the form
-            const password = document.getElementById("password").value; // Get the password from the form
-            // Make a URL-encoded string for passing POST data:
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
             const data = { 'username': username, 'password': password };
             fetch("logger2.php", {
                     method: 'POST',

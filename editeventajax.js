@@ -1,3 +1,4 @@
+// Code in this file taken/modified from "Logging in a User" section of AJAX class wiki
 function editEventAjax(event) {
     const eventcontentold = String(document.getElementById("eventcontent3").value);
     const dateold = String(document.getElementById("date3").value);
@@ -6,7 +7,7 @@ function editEventAjax(event) {
     const datenew = String(document.getElementById("date4").value);
     const timenew = String(document.getElementById("time4").value);
     const token = String(document.getElementById("token").value);
-    // Make a URL-encoded string for passing POST data:
+
     const data = { 'eventcontentold': eventcontentold, 'dateold': dateold, 'timeold': timeold, 'token': token, 'eventcontentnew': eventcontentnew, 'datenew': datenew, 'timenew': timenew };
 
     fetch("editevent_ajax.php", {

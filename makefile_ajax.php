@@ -1,4 +1,5 @@
 <?php
+    // Code in this file taken/modified from "Logging in a User" section of AJAX class wiki
     header("Content-Type: application/json");
     $json_str = file_get_contents('php://input');
     $json_obj = json_decode($json_str, true);

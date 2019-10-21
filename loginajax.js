@@ -1,10 +1,8 @@
-// ajax.js
-
+// Code in this file taken from "Logging in a User" section of AJAX class wiki
 function loginAjax(event) {
-    const username = String(document.getElementById("username").value); // Get the username from the form
-    const password = String(document.getElementById("password").value); // Get the password from the form
+    const username = String(document.getElementById("username").value);
+    const password = String(document.getElementById("password").value);
 
-    // Make a URL-encoded string for passing POST data:
     const data = { 'username': username, 'password': password };
     fetch("login_ajax.php", {
             method: 'POST',
