@@ -133,6 +133,7 @@
         <button id="showadd">Add an event</button> 
         <button id="showedit">Edit an event</button> 
         <button id="showdelete">Delete an event</button>
+        <button id="showcount">See event countdown</button>
         <br>
         <div id="buttondisplay">
              
@@ -141,24 +142,80 @@
         <script src="addeventajax.js"></script>
         <script src="deleteeventajax.js"></script>
         <script src="editeventajax.js"></script>
+        <!-- <script src="countdownajax.js"></script> -->
         <!-- date and time input types found on https://www.w3schools.com/html/html_form_input_types.asp-->
         <script>
         document.getElementById("welcome").style.display = "none";
         document.getElementById("logout").addEventListener("click", function(event){document.getElementById("buttondisplay").textContent = 
-        ' ';
+        ' '; clearInterval(sessionStorage.getItem("x"));
         },false);
         document.getElementById("showadd").addEventListener("click", function(event){ document.getElementById("buttondisplay").innerHTML = 
         '<h3>Add an event:</h3><label>Event: <input type="text" id="eventcontent1" placeholder="Title" /></label><br><br><label>Date: <input type="date" id="date1"/></label><label>Time: <input type="time" id="time1" /></label><br><br><button id="addevent">Add</button>';
         document.getElementById("addevent").addEventListener("click", addEventAjax, false);
+        clearInterval(sessionStorage.getItem("x"));
         document.getElementById("addevent").addEventListener("click", mainMonth, false);},false);
         document.getElementById("showdelete").addEventListener("click", function(event){document.getElementById("buttondisplay").innerHTML = 
         '<h3>Delete an event:</h3><label>Event: <input type="text" id="eventcontent2" placeholder="Title" /></label><br><br><label>Date: <input type="date" id="date2"/></label><label>Time: <input type="time" id="time2" /></label><br><br><button id="deleteevent">Delete</button>';
         document.getElementById("deleteevent").addEventListener("click", deleteEventAjax, false);
+        clearInterval(sessionStorage.getItem("x"));
         document.getElementById("deleteevent").addEventListener("click", mainMonth, false);},false);
         document.getElementById("showedit").addEventListener("click", function(event){document.getElementById("buttondisplay").innerHTML = 
         '<h3>Edit an event:</h3><label><strong>Choose the event you would like to modify: </strong><input type="text" id="eventcontent3" placeholder="Event Title" /></label><label>Date: <input type="date" id="date3"/></label><label>Time: <input type="time" id="time3" /></label><br><br><label><strong>Modified event input: </strong><input type="text" id="eventcontent4" placeholder="Event Title" /></label><label>Date: <input type="date" id="date4"/></label><label>Time: <input type="time" id="time4" /></label></label><br><br><button id="editevent">Modify</button>';
         document.getElementById("editevent").addEventListener("click", editEventAjax, false);
+        clearInterval(sessionStorage.getItem("x"));
         document.getElementById("editevent").addEventListener("click", mainMonth, false);},false);
+        document.getElementById("showcount").addEventListener("click", function(event){document.getElementById("buttondisplay").innerHTML = 
+        '<h3>Show countdown:</h3><label><strong>Choose the event you would like to see a countdown to: </strong><input type="text" id="eventcontent5" placeholder="Event Title" /></label><label>Date: <input type="date" id="date5"/></label><label>Time: <input type="time" id="time5" /></label> <button id="countdown">See countdown</button><br><br><div id="timer"> </div>';
+        document.getElementById("countdown").addEventListener("click", countdownAjax, false);},false);       
+        function countdownAjax(event) {
+            const eventcontent = String(document.getElementById("eventcontent5").value);
+            const dateorg = document.getElementById("date5").value;
+            const date = String(document.getElementById("date5").value);
+            const time = String(document.getElementById("time5").value);
+            const token = String(document.getElementById("token").value);
+
+            const data = { 'eventcontent': eventcontent, 'date': date, 'time': time, 'token': token };
+
+            fetch("countdown_ajax.php", {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: { 'content-type': 'application/json' }
+                })
+                .then(response => response.json())
+                .then(data => {console.log(data.success ? "Countdown showing." : `Countdown could not be shown. ${data.message}`); if(!data.success){alert(data.message)}else{counter(data.year, data.month, data.day, data.hours, data.minutes)}});
+        }
+        function counter(year, month, day, hour, min){
+            // Code for this method found on https://www.w3schools.com/howto/howto_js_countdown.asp
+            if(sessionStorage.getItem("x")!=null){
+                clearInterval(sessionStorage.getItem("x"));
+            }  
+            let countDownDate = new Date(year, month, day, hour, min);
+
+            // Update the count down every 1 second
+            sessionStorage.setItem("x", setInterval(function() {
+                // Get today's date and time
+                let now = new Date().getTime();
+
+                // Find the distance between now and the count down date
+                let distance = countDownDate - now;
+
+                // Time calculations for days, hours, minutes and seconds
+                let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Display the result in the element with id="demo"
+                document.getElementById("timer").innerHTML = days + "d " + hours + "h "
+                + minutes + "m " + seconds + "s ";
+
+                // If the count down is finished, write some text
+                if (distance < 0) {
+                    clearInterval(sessionStorage.getItem("x"));
+                    document.getElementById("timer").innerHTML = "EXPIRED: This date has already passed.";
+                }
+            }, 1000))
+        }
         </script>
     </div>
     <div id="nonuser">
@@ -423,7 +480,9 @@
                 }
             }
             document.getElementById('downloadlink').style.visibility = "hidden";
-            document.getElementById("create").style.visibility = "visible";
+            if(sessionStorage.getItem("loggedin")==1){
+                document.getElementById("create").style.visibility = "visible";
+            }
             date = date0
         }
         function nextPage(){
@@ -531,7 +590,7 @@
         document.getElementById("prevpg").addEventListener("click", prevPage, false);
         document.getElementById("nextpg").addEventListener("click", nextPage, false);
         document.getElementById("logout").addEventListener("click", logOut, false);
-        document.getElementById("deleteuser").addEventListener("click", deleteUser, false);
+        document.getElementById("deleteuser").addEventListener("click", function(event){deleteUser(); clearInterval(sessionStorage.getItem("x"));}, false);
         // Code taken/modified from "Logging in a User" section of AJAX class wiki
         function logOut(){
             fetch('unlog.php')
@@ -559,7 +618,6 @@
                 .then(data => {console.log(data.success ? "Your account has been deleted" : `Your account was not deleted. ${data.message}`); if(!data.success){alert(data.message)}else{alert("Your account has been deleted."); logOut();}});
             
         }        
-        // document.getElementById("login_btn").addEventListener("click", loginChecker, false);
         // Code taken/modified from "Logging in a User" section of AJAX class wiki
         function loginChecker(event) {
             const username = document.getElementById("username").value;
