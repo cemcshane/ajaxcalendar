@@ -126,14 +126,14 @@
     </div>
     
     <div id="yesuser">
-        <button id="logout">Log out</button><br><br>
+        <button id="logout">Log out</button> <button id="deleteuser">Delete account</button><br><br>
         <!-- Text file creater button found on https://jsfiddle.net/taditdash/hkjpzjuj/ -->
         <button id="create">Create a text file of this month's events</button> <a download="monthevents.txt" href="" id="downloadlink" style="visibility: hidden">Download</a>
         <br><br>
         <button id="showadd">Add an event</button> 
         <button id="showedit">Edit an event</button> 
         <button id="showdelete">Delete an event</button>
-        <button id="deleteuser">Delete account</button><br>
+        <br>
         <div id="buttondisplay">
              
         </div>
