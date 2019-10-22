@@ -36,34 +36,64 @@ function fileParser(entr){
             if(eventArray[item.day]==undefined){
                 eventArray[item.day] = "";
             }
-            if(item.time1 > 12){
-                if(item.time2 < 10){
-                    eventArray[item.day] += 
+                if(item.time1 > 12){
+                    if(item.time2 < 10){
+                        eventArray[item.day] += 
                     `${item.time1-12}:0${item.time2} PM: ${item.event}
-                    
+                        
             `;
-                }
-                else{
-                    eventArray[item.day] += 
+                    }
+                    else{
+                        eventArray[item.day] += 
                     `${item.time1-12}:${item.time2} PM: ${item.event}
 
             `;
+                    }
                 }
-            }
-            else{
-                if(item.time2 < 10){
-                    eventArray[item.day] += 
+                else{
+                    if(item.time1==0){
+                        if(item.time2 < 10){
+                            eventArray[item.day] += 
+                    `12:0${item.time2} AM: ${item.event}
+                            
+            `;
+                        }
+                        else{
+                            eventArray[item.day] += 
+                    `12:${item.time2} AM: ${item.event}
+
+            `;
+                        }
+                    }
+                    if(item.time1==12){
+                        if(item.time2 < 10){
+                            eventArray[item.day] += 
+                    `12:0${item.time2} PM: ${item.event}
+                            
+            `;
+                        }
+                        else{
+                            eventArray[item.day] += 
+                    `12:${item.time2} PM: ${item.event}
+
+            `;
+                        }
+                    }
+                    if(item.time1!=12&&item.time1!=0){
+                        if(item.time2 < 10){
+                            eventArray[item.day] += 
                     `${item.time1}:0${item.time2} AM: ${item.event}
 
             `;
-                }
-                else{
-                    eventArray[item.day] += 
+                        }
+                        else{
+                            eventArray[item.day] += 
                     `${item.time1}:${item.time2} AM: ${item.event}
-                    
+                            
             `;
-                }
-            }
+                        }                    
+                    }
+                }                
         }                
     }
     let resp = "";
@@ -84,5 +114,5 @@ function fileParser(entr){
         makeFileAjax();
         let link = document.getElementById('downloadlink');
         link.style.visibility = 'visible';
-        document.getElementById("create").textContent = "Change your events this month? Click to update text file, then download again.";
+        document.getElementById("create").style.visibility = "hidden";
     }, false);

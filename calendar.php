@@ -114,8 +114,7 @@
         function nameMonth(num){
             return month[num];
         }
-    </script>
-    <h1><span id="month">Month</span> <span id="year">Year</span></h1>
+    </script>   
     <div id="welcome">
         <?php 
         ini_set("session.cookie_httponly", 1);
@@ -133,7 +132,8 @@
         <br><br>
         <button id="showadd">Add an event</button> 
         <button id="showedit">Edit an event</button> 
-        <button id="showdelete">Delete an event</button><br>
+        <button id="showdelete">Delete an event</button>
+        <button id="deleteuser">Delete account</button><br>
         <div id="buttondisplay">
              
         </div>
@@ -174,6 +174,7 @@
         <!-- <script src="loginajax.js"></script> -->
         <br><br><br>
     </div>
+    <h1><span id="month">Month</span> <span id="year">Year</span></h1>
     <button id="prevpg">Previous Month</button><button id="nextpg">Next Month</button>
     <br>
     <br>
@@ -322,11 +323,29 @@
                         }
                     }
                     else{
-                        if(item.time2 < 10){
-                            respo += `<li>${item.time1}:0${item.time2} AM: ${item.event}</li>`;
+                        if(item.time1==0){
+                            if(item.time2 < 10){
+                                respo += `<li>12:0${item.time2} AM: ${item.event}</li>`;
+                            }
+                            else{
+                                respo += `<li>12:${item.time2} AM: ${item.event}</li>`;
+                            }
                         }
-                        else{
-                            respo += `<li>${item.time1}:${item.time2} AM: ${item.event}</li>`;
+                        if(item.time1==12){
+                            if(item.time2 < 10){
+                                respo += `<li>12:0${item.time2} PM: ${item.event}</li>`;
+                            }
+                            else{
+                                respo += `<li>12:${item.time2} PM: ${item.event}</li>`;
+                            }
+                        }
+                        if(item.time1!=12&&item.time1!=0){
+                            if(item.time2 < 10){
+                                respo += `<li>${item.time1}:0${item.time2} AM: ${item.event}</li>`;
+                            }
+                            else{
+                                respo += `<li>${item.time1}:${item.time2} AM: ${item.event}</li>`;
+                            }                            
                         }
                     }
                 }                
@@ -365,12 +384,12 @@
                 }
             }
         function mainMonth(){
-            let date = new Date();
-            document.getElementById("month").textContent = nameMonth(date.getMonth());
+            let date0 = new Date();
+            document.getElementById("month").textContent = nameMonth(date0.getMonth());
             // getFullYear() function found on https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear
-            document.getElementById("year").textContent = date.getFullYear();
-            let first = new Date(2019, date.getMonth(), 1);
-            let zeroDate = new Date(2019, date.getMonth()+1, 0);
+            document.getElementById("year").textContent = date0.getFullYear();
+            let first = new Date(2019, date0.getMonth(), 1);
+            let zeroDate = new Date(2019, date0.getMonth()+1, 0);
             let day = 1;
             for (j=1; j<=6; j++){
                 if(day <= Number(zeroDate.getDate())){
@@ -403,6 +422,9 @@
                     }
                 }
             }
+            document.getElementById('downloadlink').style.visibility = "hidden";
+            document.getElementById("create").style.visibility = "visible";
+            date = date0
         }
         function nextPage(){
             let currdate = date;
@@ -451,6 +473,8 @@
                         }
                     }
             }
+            document.getElementById('downloadlink').style.visibility = "hidden";
+            document.getElementById("create").style.visibility = "visible";
             date = first1;
         }
         function prevPage(){
@@ -500,11 +524,14 @@
                         }
                     }
             }
+            document.getElementById('downloadlink').style.visibility = "hidden";
+            document.getElementById("create").style.visibility = "visible";
             date = first2;
         }
         document.getElementById("prevpg").addEventListener("click", prevPage, false);
         document.getElementById("nextpg").addEventListener("click", nextPage, false);
         document.getElementById("logout").addEventListener("click", logOut, false);
+        document.getElementById("deleteuser").addEventListener("click", deleteUser, false);
         // Code taken/modified from "Logging in a User" section of AJAX class wiki
         function logOut(){
             fetch('unlog.php')
@@ -515,7 +542,23 @@
             sessionStorage.setItem("loggedin", 0);
             mainMonth();
             whatToDisplay();
+            document.getElementById('downloadlink').style.visibility = "hidden";
+            document.getElementById("create").style.visibility = "hidden";
         }
+        // Code taken/modified from "Logging in a User" section of AJAX class wiki        
+        function deleteUser(event) {
+            const token = String(document.getElementById("token").value);
+
+            const data = { 'token': token };
+            fetch("deleteuser_ajax.php", {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: { 'content-type': 'application/json' }
+                })
+                .then(response => response.json())
+                .then(data => {console.log(data.success ? "Your account has been deleted" : `Your account was not deleted. ${data.message}`); if(!data.success){alert(data.message)}else{alert("Your account has been deleted."); logOut();}});
+            
+        }        
         // document.getElementById("login_btn").addEventListener("click", loginChecker, false);
         // Code taken/modified from "Logging in a User" section of AJAX class wiki
         function loginChecker(event) {
