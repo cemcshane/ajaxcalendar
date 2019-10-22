@@ -13,4 +13,5 @@ function loginAjax(event) {
         .then(data => {console.log(data.success ? "You've been logged in!" : `You were not logged in. ${data.message}`); if(!data.success){alert(data.message)}else{document.getElementById('token').setAttribute("value", data.token)}});
     
 }
-document.getElementById("login_btn").addEventListener("click", loginAjax, false);
+
+// document.getElementById("login_btn").addEventListener("click", loginAjax, false);

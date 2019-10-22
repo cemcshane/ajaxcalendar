@@ -171,7 +171,7 @@
         <label id="signin">Sign in: <input type="text" id="username" placeholder="Username" /></label>
         <input type="password" id="password" placeholder="Password" />
         <button id="login_btn">Log In</button>
-        <script src="loginajax.js"></script>
+        <!-- <script src="loginajax.js"></script> -->
         <br><br><br>
     </div>
     <button id="prevpg">Previous Month</button><button id="nextpg">Next Month</button>
@@ -198,7 +198,22 @@
         ?>
     </table>
     <script>
-    document.getElementById("login_btn").addEventListener("click", loginAjax, false);
+        function loginAjax(event, callback) {
+            const username = String(document.getElementById("username").value);
+            const password = String(document.getElementById("password").value);
+
+            const data = { 'username': username, 'password': password };
+            fetch("login_ajax.php", {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: { 'content-type': 'application/json' }
+                })
+                .then(response => response.json())
+                .then(data => {console.log(data.success ? "You've been logged in!" : `You were not logged in. ${data.message}`); if(!data.success){alert(data.message)}else{document.getElementById('token').setAttribute("value", data.token); callback();}});
+                
+            
+        }
+    document.getElementById("login_btn").addEventListener("click", function(event){loginAjax(event, loginChecker);}, false);
     document.addEventListener("DOMContentLoaded", whatToDisplay, false);
     function whatToDisplay(){
         // sessionStorage info found on https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage
@@ -220,8 +235,6 @@
             document.getElementById("welcome").style.display = "none";
         }
     }
-    </script>
-    <script>
         document.getElementById("login_btn").addEventListener("click", mainMonth, false);
         let date = new Date();
         document.getElementById("month").textContent = nameMonth(date.getMonth());
@@ -328,13 +341,23 @@
                                 // getDay() function found on https://www.w3schools.com/jsref/jsref_getday.asp
                                 if(i>first.getDay()){
                                     document.getElementById(`(${j},${i})`).firstChild.textContent = day;
-                                    displayEvents(date, day);
+                                    if(sessionStorage.getItem("loggedin")==1){
+                                        displayEvents(date, day);
+                                    }
+                                    else{
+                                        document.getElementById(`(${j},${i})`).lastChild.textContent = "";
+                                    }
                                     day++;
                                 }
                             }
                             else{
                                 document.getElementById(`(${j},${i})`).firstChild.textContent = day;
-                                displayEvents(date, day);
+                                if(sessionStorage.getItem("loggedin")==1){
+                                        displayEvents(date, day);
+                                }
+                                else{
+                                    document.getElementById(`(${j},${i})`).lastChild.textContent = "";
+                                }
                                 day++;
                             }
                         }
@@ -357,13 +380,23 @@
                                 // getDay() function found on https://www.w3schools.com/jsref/jsref_getday.asp
                                 if(i>first.getDay()){
                                     document.getElementById(`(${j},${i})`).firstChild.textContent = day;
-                                    displayEvents(first, day);
+                                    if(sessionStorage.getItem("loggedin")==1){
+                                        displayEvents(first, day);
+                                    }
+                                    else{
+                                        document.getElementById(`(${j},${i})`).lastChild.textContent = "";
+                                    }
                                     day++;
                                 }
                             }
                             else{
                                 document.getElementById(`(${j},${i})`).firstChild.textContent = day;
-                                displayEvents(first, day);
+                                if(sessionStorage.getItem("loggedin")==1){
+                                    displayEvents(first, day);
+                                }
+                                else{
+                                    document.getElementById(`(${j},${i})`).lastChild.textContent = "";
+                                }
                                 day++;
                             }
                         }
@@ -388,7 +421,12 @@
                                 // getDay() function found on https://www.w3schools.com/jsref/jsref_getday.asp
                                 if(i>first1.getDay()){
                                     document.getElementById(`(${j},${i})`).firstChild.textContent = day;
-                                    displayEvents(first1, day);
+                                    if(sessionStorage.getItem("loggedin")==1){
+                                        displayEvents(first1, day);
+                                    }
+                                    else{
+                                        document.getElementById(`(${j},${i})`).lastChild.textContent = "";
+                                    }
                                     day++;
                                 }
                                 else{
@@ -398,7 +436,12 @@
                             }
                             else{
                                 document.getElementById(`(${j},${i})`).firstChild.textContent = day;
-                                displayEvents(first1, day);
+                                if(sessionStorage.getItem("loggedin")==1){
+                                        displayEvents(first1, day);
+                                }
+                                else{
+                                    document.getElementById(`(${j},${i})`).lastChild.textContent = "";
+                                }
                                 day++;
                             }
                         }
@@ -427,7 +470,12 @@
                                 // getDay() function found on https://www.w3schools.com/jsref/jsref_getday.asp
                                 if(i>first2.getDay()){
                                     document.getElementById(`(${j},${i})`).firstChild.textContent = day;
-                                    displayEvents(first2, day);
+                                    if(sessionStorage.getItem("loggedin")==1){
+                                        displayEvents(first2, day);
+                                    }
+                                    else{
+                                        document.getElementById(`(${j},${i})`).lastChild.textContent = "";
+                                    }
                                     day++;
                                 }
                                 else{
@@ -437,7 +485,12 @@
                             }
                             else{
                                 document.getElementById(`(${j},${i})`).firstChild.textContent = day;
-                                displayEvents(first2, day);
+                                if(sessionStorage.getItem("loggedin")==1){
+                                        displayEvents(first2, day);
+                                }
+                                else{
+                                    document.getElementById(`(${j},${i})`).lastChild.textContent = "";
+                                }
                                 day++;
                             }
                         }
@@ -463,9 +516,7 @@
             mainMonth();
             whatToDisplay();
         }
-    </script>
-    <script>
-        document.getElementById("login_btn").addEventListener("click", loginChecker, false);
+        // document.getElementById("login_btn").addEventListener("click", loginChecker, false);
         // Code taken/modified from "Logging in a User" section of AJAX class wiki
         function loginChecker(event) {
             const username = document.getElementById("username").value;
