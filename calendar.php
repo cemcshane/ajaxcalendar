@@ -466,6 +466,10 @@
                                 day++;
                             }
                         }
+                        else{
+                            document.getElementById(`(${j},${i})`).firstChild.textContent = "";
+                            document.getElementById(`(${j},${i})`).lastChild.textContent = "";
+                        }
                     }
                 }
             }
