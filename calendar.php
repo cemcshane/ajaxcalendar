@@ -400,7 +400,6 @@
             document.getElementById(coords[firstdt.getDay()+dy]).lastChild.innerHTML= respo;
         }
         for (j=1; j<=6; j++){
-                if(day <= Number(zeroDate.getDate())){
                     for (i=1; i<=7; i++){
                         if (day <= Number(zeroDate.getDate())){
                             if (j==1){
@@ -428,7 +427,6 @@
                             }
                         }
                     }
-                }
             }
         function mainMonth(){
             let date0 = new Date();
@@ -439,7 +437,6 @@
             let zeroDate = new Date(2019, date0.getMonth()+1, 0);
             let day = 1;
             for (j=1; j<=6; j++){
-                if(day <= Number(zeroDate.getDate())){
                     for (i=1; i<=7; i++){
                         if (day <= Number(zeroDate.getDate())){
                             if (j==1){
@@ -471,7 +468,6 @@
                             document.getElementById(`(${j},${i})`).lastChild.textContent = "";
                         }
                     }
-                }
             }
             document.getElementById('downloadlink').style.visibility = "hidden";
             if(sessionStorage.getItem("loggedin")==1){
