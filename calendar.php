@@ -523,7 +523,9 @@
                     }
             }
             document.getElementById('downloadlink').style.visibility = "hidden";
-            document.getElementById("create").style.visibility = "visible";
+            if(sessionStorage.getItem("loggedin")==1){
+                document.getElementById("create").style.visibility = "visible";
+            }
             date = first1;
         }
         function prevPage(){
@@ -574,7 +576,9 @@
                     }
             }
             document.getElementById('downloadlink').style.visibility = "hidden";
-            document.getElementById("create").style.visibility = "visible";
+            if(sessionStorage.getItem("loggedin")==1){
+                document.getElementById("create").style.visibility = "visible";
+            }
             date = first2;
         }
         document.getElementById("prevpg").addEventListener("click", prevPage, false);
